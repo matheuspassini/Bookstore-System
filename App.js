@@ -1,17 +1,13 @@
 const Database = require("./Database")
-const Author = require("./entities/Author")
-const User = require("./entities/User")
 const Book = require("./entities/Book")
 const Poster = require("./entities/Poster")
-const Order = require("./entities/Order")
-
 
 
 module.exports = class App {
     static #database = new Database()
 
-    createUser(name, email, password) {
-        const user = new User(name, email, password)
+    createUser(createUserWithBuilder) {
+        const user = createUserWithBuilder.build()
         App.#database.saveUser(user)
     }
 
@@ -19,8 +15,8 @@ module.exports = class App {
         return App.#database.find('users')
     }
 
-    createAuthor(name, nationality, bio) {
-        const author = new Author(name, nationality, bio)
+    createAuthor(createAuthorWithBuilder) {
+        const author = createAuthorWithBuilder.build()
         App.#database.saveAuthor(author)
     }
 
@@ -28,8 +24,8 @@ module.exports = class App {
         return App.#database.find('authors')
     }
 
-    createBook(title, synopsis, genre, pages, author, description, price, inStock) {
-        const book = new Book(title, synopsis, genre, pages, author, description, price, inStock)
+    createBook(createBookWithBuilder) {
+        const book = createBookWithBuilder.build()
         App.#database.saveBook(book)
     }
 
@@ -41,8 +37,8 @@ module.exports = class App {
         return App.#database.find('books')
     }
 
-    createPoster(name, description, height, width, price, inStock) {
-        const poster = new Poster(name, description, height, width, price, inStock)
+    createPoster(createPosterWithBuilder) {
+        const poster = createPosterWithBuilder.build()
         App.#database.savePoster(poster)
     }
 
@@ -54,17 +50,17 @@ module.exports = class App {
         return App.#database.find('posters')
     }
 
-    createOrder(items, user) {
-        const order = new Order(items, user)
+    createOrder(createOrderWithBuilder) {
+        const order = createOrderWithBuilder.build()
         App.#database.saveOrder(order)
         order.data.items.forEach(({ product, amount }) => {
-          if (product instanceof Book) {
-            App.#database.removeBooksFromStock(product.name, amount)
-          } else if (product instanceof Poster) {
-            App.#database.removePostersFromStock(product.name, amount)
-          }
+            if (product instanceof Book) {
+                App.#database.removeBooksFromStock(product.name, amount)
+            } else if (product instanceof Poster) {
+                App.#database.removePostersFromStock(product.name, amount)
+            }
         })
-      }
+    }
 
     getOrders() {
         App.#database.find('orders')
