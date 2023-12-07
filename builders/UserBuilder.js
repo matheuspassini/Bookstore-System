@@ -1,11 +1,27 @@
 const User = require("../entities/User")
 
 module.exports = class UserBuilder {
-    constructor(name, email, password) {
-        this.user = new User(name, email, password);
+
+    setName(name) {
+        this.name = name
+        return this
+    }
+
+    setEmail(email) {
+        this.email = email
+        return this
+    }
+
+    setPassword(password) {
+        this.password = password
+        return this
     }
 
     build() {
-        return this.user;
+        return new User(
+            this.name,
+            this.email,
+            this.password
+        )
     }
 }
