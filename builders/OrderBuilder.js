@@ -1,11 +1,21 @@
 const Order = require("../entities/Order")
 
 module.exports = class OrderBuilder {
-    constructor(items, user) {
-        this.order = new Order(items, user)
+
+    setItems(items) {
+        this.items = items
+        return this
+    }
+
+    setUser(user) {
+        this.user = user
+        return this
     }
 
     build() {
-        return this.order
+        return new Order(
+            this.items,
+            this.user
+        )
     }
 }
