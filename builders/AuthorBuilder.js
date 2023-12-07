@@ -1,11 +1,26 @@
 const Author = require('../entities/Author')
 
 module.exports = class AuthorBuilder {
-    constructor(name, nationality, bio) {
-        this.author = new Author(name, nationality, bio);
+    setName(name) {
+        this.name = name
+        return this // Return this instead of name
+    }
+
+    setNationality(nationality) {
+        this.nationality = nationality
+        return this
+    }
+
+    setBio(bio) {
+        this.bio = bio
+        return this
     }
 
     build() {
-        return this.author;
+        return new Author(
+            this.name,
+            this.nationality,
+            this.bio
+        )
     }
 }
