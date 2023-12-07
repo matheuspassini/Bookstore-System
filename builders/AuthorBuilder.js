@@ -3,7 +3,7 @@ const Author = require('../entities/Author')
 module.exports = class AuthorBuilder {
     setName(name) {
         this.name = name
-        return this // Return this instead of name
+        return this
     }
 
     setNationality(nationality) {
