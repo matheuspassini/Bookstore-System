@@ -7,7 +7,7 @@ module.exports = class App {
     static #database = new Database()
 
     createUser(createUserWithBuilder) {
-        const user = createUserWithBuilder.build()
+        const user = createUserWithBuilder
         App.#database.saveUser(user)
     }
 
@@ -16,7 +16,7 @@ module.exports = class App {
     }
 
     createAuthor(createAuthorWithBuilder) {
-        const author = createAuthorWithBuilder.build()
+        const author = createAuthorWithBuilder
         App.#database.saveAuthor(author)
     }
 
@@ -25,7 +25,7 @@ module.exports = class App {
     }
 
     createBook(createBookWithBuilder) {
-        const book = createBookWithBuilder.build()
+        const book = createBookWithBuilder
         App.#database.saveBook(book)
     }
 
@@ -38,7 +38,7 @@ module.exports = class App {
     }
 
     createPoster(createPosterWithBuilder) {
-        const poster = createPosterWithBuilder.build()
+        const poster = createPosterWithBuilder
         App.#database.savePoster(poster)
     }
 
@@ -51,7 +51,7 @@ module.exports = class App {
     }
 
     createOrder(createOrderWithBuilder) {
-        const order = createOrderWithBuilder.build()
+        const order = createOrderWithBuilder
         App.#database.saveOrder(order)
         order.data.items.forEach(({ product, amount }) => {
             if (product instanceof Book) {
@@ -61,6 +61,7 @@ module.exports = class App {
             }
         })
     }
+
 
     getOrders() {
         App.#database.find('orders')
